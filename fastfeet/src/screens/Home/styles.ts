@@ -26,6 +26,7 @@ export const TitleFirstWord = styled(Title)`
 
 export const Text = styled.Text`
   margin-vertical: 24px;
+  line-height: 24px;
   color: ${theme.colors.gray.light};
   font-size: ${theme.fontSizes.medium}px;
   font-family: ${theme.fonts.body.regular};
@@ -52,6 +53,8 @@ export const ViewUser = styled.View`
   align-items: center;
   justify-content: center;
 `;
+
+export const Link = styled.TouchableOpacity``;
 
 export const ButtonEye = styled.TouchableOpacity`
   position: absolute;

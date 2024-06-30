@@ -5,6 +5,8 @@ import {
 
 import { Home } from "../screens/Home";
 import { ForgotPassword } from "../screens/ForgotPassword";
+import { View, StyleSheet } from "react-native";
+import theme from "../theme";
 
 type AppRoutes = {
   home: undefined;
@@ -17,9 +19,18 @@ const { Navigator, Screen } = createNativeStackNavigator<AppRoutes>();
 
 export function AppRoutes() {
   return (
-    <Navigator screenOptions={{ headerShown: false }}>
-      <Screen name="home" component={Home} />
-      <Screen name="forgotPassword" component={ForgotPassword} />
-    </Navigator>
+    <View style={styles.container}>
+      <Navigator screenOptions={{ headerShown: false }}>
+        <Screen name="home" component={Home} />
+        <Screen name="forgotPassword" component={ForgotPassword} />
+      </Navigator>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.primaryBlue.main,
+  },
+});

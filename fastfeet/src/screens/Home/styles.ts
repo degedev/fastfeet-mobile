@@ -1,16 +1,16 @@
 import styled from "styled-components/native";
 import theme from "../../theme";
-export const Container = styled.View`
-  flex: 1;
+
+export const Container = styled.ScrollView`
   background-color: ${theme.colors.primaryBlue.main};
-  padding: 32px;
+  padding: 0 32px;
 `;
 
 export const Header = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-vertical: 36px;
+  margin: 36px 0 28px 0;
 `;
 
 export const Title = styled.Text`
@@ -35,7 +35,6 @@ export const Text = styled.Text`
 export const Input = styled.TextInput`
   flex: 1;
   height: 45px;
-  margin-vertical: 4px;
   padding: 0 8px 0 42px;
   border-radius: 4px;
   background-color: #ffffff;

@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CheckBox } from "../../components/CheckBox";
 import {
   Container,
@@ -14,15 +14,17 @@ import {
   Link,
   ButtonEye,
 } from "./styles";
-import { Image, TouchableOpacity, View } from "react-native";
+import { Image } from "react-native";
 import { User, Lock, EyeSlash, Eye } from "phosphor-react-native";
 import { useTheme } from "styled-components/native";
 import { Button } from "../../components/Button";
 import { AppNavigatorRoutesProps } from "../../routes/app.routes";
+import { Keyboard } from "react-native";
 
 export function Home() {
   const { colors } = useTheme();
   const navigation = useNavigation<AppNavigatorRoutesProps>();
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [toggleSecureTextEntry, setToggleSecureTextEntry] = useState(true);
 
@@ -34,16 +36,27 @@ export function Home() {
     navigation.navigate("forgotPassword");
   }
 
+  useEffect(() => {
+    const keyboardOpenListener = Keyboard.addListener("keyboardDidShow", () =>
+      setIsKeyboardOpen(true)
+    );
+    const keyboardCloseListener = Keyboard.addListener("keyboardDidHide", () =>
+      setIsKeyboardOpen(false)
+    );
+  });
   return (
     <Container>
       <Header>
         <Image source={require("../../../assets/Logotipo.png")} />
         <Image source={require("../../../assets/Logo.png")} />
       </Header>
-      <Title>
-        <TitleFirstWord>Entregador, {"\n"}</TitleFirstWord>
-        você é nosso maior valor
-      </Title>
+
+      {!isKeyboardOpen && (
+        <Title>
+          <TitleFirstWord>Entregador, {"\n"}</TitleFirstWord>
+          você é nosso maior valor
+        </Title>
+      )}
       <Text>Faça seu login para{"\n"}começar suas entregas.</Text>
       <ViewUser>
         <ViewIcon>
@@ -56,7 +69,6 @@ export function Home() {
           <Lock size={18} weight="fill" color={colors.primaryYellow.main} />
         </ViewIcon>
         <Input placeholder="Senha" secureTextEntry={toggleSecureTextEntry} />
-
         <ButtonEye onPress={toggleSecureEntry}>
           {toggleSecureTextEntry ? (
             <EyeSlash size={24} color={colors.primaryBlue.main} weight="fill" />

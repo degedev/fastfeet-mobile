@@ -20,25 +20,36 @@ import { MagnifyingGlass, MapPin, SignOut } from "phosphor-react-native";
 import { CardDeliverie } from "../../components/CardDeliverie";
 import { TextCount } from "../../components/CardDeliverie/styles";
 import { Button, Image } from "react-native";
+import { useState } from "react";
 
 export function Deliverie() {
   const { colors } = useTheme();
+  const [isScrolled, setIsScrolled] = useState(true);
   const navigation = useNavigation();
 
-  function handleHome() {
-    navigation.goBack();
-  }
+  const handleScroll = (event: {
+    nativeEvent: { contentOffset: { y: any } };
+  }) => {
+    const yOffset = event.nativeEvent.contentOffset.y;
+    setIsScrolled(yOffset < 20);
+  };
 
   return (
     <Container>
-      <ContainerHeader>
-        <ViewUser>
-          <Text>
-            Bem vindo, {"\n"}
-            João Silva
-          </Text>
-          <SignOut size={24} color={colors.primaryYellow.main} weight="fill" />
-        </ViewUser>
+      <ContainerHeader active={isScrolled}>
+        {isScrolled && (
+          <ViewUser>
+            <Text>
+              Bem vindo, {"\n"}
+              João Silva
+            </Text>
+            <SignOut
+              size={24}
+              color={colors.primaryYellow.main}
+              weight="fill"
+            />
+          </ViewUser>
+        )}
         <ViewUser>
           <Title>Entregas</Title>
           <ViewLocation>
@@ -55,7 +66,11 @@ export function Deliverie() {
           </ViewIcon>
         </ViewInput>
         <TextCount>8 entregas</TextCount>
-        <ContainerCards showsVerticalScrollIndicator={false}>
+        <ContainerCards
+          onScroll={handleScroll}
+          scrollEventThrottle={64}
+          showsVerticalScrollIndicator={false}
+        >
           <CardDeliverie
             title={"Pacote 1"}
             date={"01/07/2024"}

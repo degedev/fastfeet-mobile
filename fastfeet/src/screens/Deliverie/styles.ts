@@ -1,6 +1,9 @@
 import styled from "styled-components/native";
 import theme from "../../theme";
 
+type ScrollProps = {
+  active: boolean;
+};
 type ButtonProps = {
   active: boolean;
 };
@@ -9,11 +12,12 @@ export const Container = styled.View`
   flex: 1;
   justify-content: space-between;
 `;
-export const ContainerHeader = styled.View`
-  height: 30%;
+export const ContainerHeader = styled.View<ScrollProps>`
+  height: ${({ active }) => (active ? 30 : 20)}%;
   background-color: ${theme.colors.primaryBlue.main};
   padding: 32px;
 `;
+
 export const ViewUser = styled.View`
   margin: 12px 0;
   flex-direction: row;

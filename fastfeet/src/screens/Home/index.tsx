@@ -13,9 +13,11 @@ import {
   ViewIcon,
   Link,
   ButtonEye,
+  ModalView,
+  TitleModal,
 } from "./styles";
-import { Image } from "react-native";
-import { User, Lock, EyeSlash, Eye } from "phosphor-react-native";
+import { Image, Modal, TouchableWithoutFeedback } from "react-native";
+import { User, Lock, EyeSlash, Eye, XCircle } from "phosphor-react-native";
 import { useTheme } from "styled-components/native";
 import { Button } from "../../components/Button";
 import { AppNavigatorRoutesProps } from "../../routes/app.routes";
@@ -27,7 +29,11 @@ export function Home() {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [toggleSecureTextEntry, setToggleSecureTextEntry] = useState(true);
+  const [isModalVisible, setModalVisible] = useState(false);
 
+  function toggleModal() {
+    setModalVisible(!isModalVisible);
+  }
   function toggleSecureEntry() {
     setToggleSecureTextEntry(!toggleSecureTextEntry);
   }
@@ -46,6 +52,20 @@ export function Home() {
   });
   return (
     <Container>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isModalVisible}
+        statusBarTranslucent={true}
+      >
+        <TouchableWithoutFeedback onPress={toggleModal}>
+          <ModalView>
+            <XCircle size={82} color={colors.primaryRed.main} weight="fill" />
+            <TitleModal>Senha ou CPF incorretos.</TitleModal>
+          </ModalView>
+        </TouchableWithoutFeedback>
+      </Modal>
+
       <Header>
         <Image source={require("../../../assets/Logotipo.png")} />
         <Image source={require("../../../assets/Logo.png")} />
@@ -83,7 +103,7 @@ export function Home() {
           <Text>Esqueci minha senha</Text>
         </Link>
       </ViewEndForm>
-      <Button title={"Entrar"} />
+      <Button title={"Entrar"} onPress={toggleModal} />
     </Container>
   );
 }

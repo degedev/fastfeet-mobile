@@ -6,6 +6,21 @@ export const Container = styled.ScrollView`
   padding: 0 32px;
 `;
 
+export const ModalView = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.85);
+`;
+
+export const TitleModal = styled.Text`
+  width: 50%;
+  text-align: center;
+  color: #ffffff;
+  font-size: ${theme.fontSizes.extraLarge}px;
+  font-family: ${theme.fonts.body.regular};
+`;
+
 export const Header = styled.View`
   flex-direction: row;
   align-items: center;

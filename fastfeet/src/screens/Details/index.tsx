@@ -13,19 +13,48 @@ import {
   ContentStatusData,
   ContentStatusItem,
   ContentHeader,
+  ModalView,
+  TitleModal,
+  TextModal,
 } from "./styles";
 import { useTheme } from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "../../components/Button";
 import { useState } from "react";
 import { ArrowLeft, ClipboardText, WarningCircle } from "phosphor-react-native";
+import {
+  Modal,
+  Image,
+  TouchableWithoutFeedback,
+  StatusBar,
+} from "react-native";
 
 export function Details() {
   const { colors } = useTheme();
   const navigation = useNavigation();
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  function toggleModal() {
+    setModalVisible(!isModalVisible);
+  }
 
   return (
     <Container>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isModalVisible}
+        statusBarTranslucent={true}
+      >
+        <TouchableWithoutFeedback onPress={toggleModal}>
+          <ModalView>
+            <Image source={require("../../../assets/PackageCheck.png")} />
+            <TitleModal>Pacote retirado.</TitleModal>
+            <TextModal>Só falta entregar : ) </TextModal>
+          </ModalView>
+        </TouchableWithoutFeedback>
+      </Modal>
+
       <ContainerHeader>
         <ViewTitle>
           <ArrowLeft size={22} color={colors.white} weight="fill" />
@@ -81,7 +110,7 @@ export function Details() {
         </ContentStatus>
       </ContainerBody>
       <ContainerButtons>
-        <Button title="Retirar Pacote" />
+        <Button title="Retirar Pacote" onPress={toggleModal} />
       </ContainerButtons>
     </Container>
   );

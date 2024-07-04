@@ -5,6 +5,25 @@ export const Container = styled.View`
   flex: 1;
   justify-content: space-between;
 `;
+
+export const ModalView = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.85);
+`;
+
+export const TitleModal = styled.Text`
+  color: #ffffff;
+  font-size: ${theme.fontSizes.extraExtraLarge}px;
+  font-family: ${theme.fonts.higlight.main};
+`;
+export const TextModal = styled.Text`
+  color: #ffffff;
+  font-size: ${theme.fontSizes.small}px;
+  font-family: ${theme.fonts.body.regular};
+`;
+
 export const ContainerHeader = styled.View`
   height: 20%;
   background-color: ${theme.colors.primaryBlue.main};

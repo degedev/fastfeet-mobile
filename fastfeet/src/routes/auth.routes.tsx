@@ -7,10 +7,12 @@ import { View, StyleSheet } from "react-native";
 import theme from "../theme";
 import { Deliverie } from "../screens/Deliverie";
 import { Details } from "../screens/Details";
+import { ConfirmDelivery } from "../screens/ConfirmDelivery";
 
 type AuthRoutes = {
   deliverie: undefined;
   details: undefined;
+  confirmDelivery: undefined;
 };
 
 export type AppNavigatorRoutesProps = NativeStackNavigationProp<AuthRoutes>;
@@ -21,8 +23,9 @@ export function AuthRoutes() {
   return (
     <View style={styles.container}>
       <Navigator screenOptions={{ headerShown: false }}>
-        <Screen name="details" component={Details} />
+        <Screen name="confirmDelivery" component={ConfirmDelivery} />
         <Screen name="deliverie" component={Deliverie} />
+        <Screen name="details" component={Details} />
       </Navigator>
     </View>
   );

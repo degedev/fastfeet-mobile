@@ -3,6 +3,7 @@ import theme from "../../theme";
 
 type ScrollProps = {
   active: boolean;
+  keybordActive?: boolean;
 };
 type ButtonProps = {
   active: boolean;
@@ -13,7 +14,7 @@ export const Container = styled.View`
   justify-content: space-between;
 `;
 export const ContainerHeader = styled.View<ScrollProps>`
-  height: ${({ active }) => (active ? 30 : 20)}%;
+  flex: ${({ keybordActive }) => (keybordActive ? 5 : 1)};
   background-color: ${theme.colors.primaryBlue.main};
   padding: 32px;
 `;
@@ -37,6 +38,18 @@ export const Title = styled.Text`
   font-family: ${theme.fonts.higlight.main};
 `;
 
+export const ViewDropInput = styled.View`
+  padding: 0 18px;
+  border: 1px ${theme.colors.gray.lightest};
+  background-color: ${theme.colors.white};
+`;
+export const FlatlistDropInput = styled.FlatList`
+  width: 100%;
+  margin-top: -12px;
+  border-radius: 0 0 4px 4px;
+  background-color: ${theme.colors.white};
+`;
+
 export const ViewInput = styled.View`
   margin: -55px 0 12px 0;
   flex-direction: row;
@@ -53,12 +66,13 @@ export const ViewIcon = styled.View`
 export const Input = styled.TextInput`
   flex: 1;
   height: 45px;
+  padding: 0 18px;
   border-radius: 4px;
   background-color: ${theme.colors.white};
 `;
 
-export const ContainerBody = styled.View`
-  flex: 1;
+export const ContainerBody = styled.View<ScrollProps>`
+  flex: ${({ active }) => (active ? 3 : 6)};
   align-items: center;
   background-color: ${theme.colors.gray.lightest};
   padding: 32px;

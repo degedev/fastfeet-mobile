@@ -9,7 +9,6 @@ import {
   Subtitle,
   Link,
   LinkText,
-  Line,
   LinkView,
 } from "./styles";
 import { Image } from "react-native";
@@ -17,6 +16,7 @@ import { useTheme } from "styled-components/native";
 import { ArrowLeft } from "phosphor-react-native";
 import theme from "../../theme";
 import { useNavigation } from "@react-navigation/native";
+import Svg, { Line } from "react-native-svg";
 
 export function ForgotPassword() {
   const { colors } = useTheme();
@@ -54,8 +54,18 @@ export function ForgotPassword() {
               size={16}
               weight="fill"
               color={theme.colors.primaryYellow.main}
+              style={{ marginRight: -2.1 }}
             />
-            <Line>________</Line>
+            <Svg height="25" width="50%">
+              <Line
+                x1="0"
+                x2="80%"
+                y1="49%"
+                y2="49%"
+                stroke={colors.primaryYellow.main}
+                strokeWidth="1"
+              />
+            </Svg>
           </LinkView>
         </Link>
         <LinkText>Voltar para o login</LinkText>

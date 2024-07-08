@@ -38,39 +38,6 @@ export const Title = styled.Text`
   font-family: ${theme.fonts.higlight.main};
 `;
 
-export const ViewDropInput = styled.View`
-  padding: 0 18px;
-  border: 1px ${theme.colors.gray.lightest};
-  background-color: ${theme.colors.white};
-`;
-export const FlatlistDropInput = styled.FlatList`
-  width: 100%;
-  margin-top: -12px;
-  border-radius: 0 0 4px 4px;
-  background-color: ${theme.colors.white};
-`;
-
-export const ViewInput = styled.View`
-  margin: -55px 0 12px 0;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const ViewIcon = styled.View`
-  position: absolute;
-  right: 10px;
-  z-index: 1;
-`;
-
-export const Input = styled.TextInput`
-  flex: 1;
-  height: 45px;
-  padding: 0 18px;
-  border-radius: 4px;
-  background-color: ${theme.colors.white};
-`;
-
 export const ContainerBody = styled.View<ScrollProps>`
   flex: ${({ active }) => (active ? 3 : 6)};
   align-items: center;

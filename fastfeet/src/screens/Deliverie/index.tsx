@@ -6,27 +6,33 @@ import {
   ContainerButtons,
   ContainerCards,
   ContainerHeader,
-  Input,
   Text,
   Title,
-  ViewIcon,
-  ViewInput,
   ViewLocation,
   ViewUser,
 } from "./styles";
 import { useTheme } from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
-import { MagnifyingGlass, MapPin, SignOut } from "phosphor-react-native";
+import { MapPin, SignOut } from "phosphor-react-native";
 import { CardDeliverie } from "../../components/CardDeliverie";
 import { TextCount } from "../../components/CardDeliverie/styles";
 import { Keyboard, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
+import { DropdownTextInput } from "../../components/Dropdown";
 
 export function Deliverie() {
   const { colors } = useTheme();
   const [isScrolled, setIsScrolled] = useState(true);
   const [pendingDeliveries, setPendingDeliveries] = useState(true);
+
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const options = ["Option 1", "Option 2", "Option 3"];
+  const handleOptionSelected = (option: string) => {
+    setSelectedOption(option);
+  };
 
   const navigation = useNavigation();
 
@@ -34,7 +40,7 @@ export function Deliverie() {
     nativeEvent: { contentOffset: { y: any } };
   }) => {
     const yOffset = event.nativeEvent.contentOffset.y;
-    setIsScrolled(yOffset < 20);
+    setIsScrolled(yOffset === 0);
   };
 
   useEffect(() => {
@@ -73,16 +79,11 @@ export function Deliverie() {
         </ViewUser>
       </ContainerHeader>
       <ContainerBody active={isScrolled}>
-        <ViewInput>
-          <Input placeholder={"Filtrar por bairro"} />
-          <ViewIcon>
-            <MagnifyingGlass size={24} color="#080808" />
-          </ViewIcon>
-        </ViewInput>
+        <DropdownTextInput dataFilter={options} />
         <TextCount>8 entregas</TextCount>
         <ContainerCards
           onScroll={handleScroll}
-          scrollEventThrottle={64}
+          scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}
         >
           <CardDeliverie

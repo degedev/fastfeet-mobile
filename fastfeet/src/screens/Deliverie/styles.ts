@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import theme from "../../theme";
+import Animated from "react-native-reanimated";
 
 type ScrollProps = {
   active: boolean;
@@ -13,13 +14,13 @@ export const Container = styled.View`
   flex: 1;
   justify-content: space-between;
 `;
-export const ContainerHeader = styled.View<ScrollProps>`
-  flex: ${({ keybordActive }) => (keybordActive ? 5 : 1)};
+
+export const AnimatedHeader = styled(Animated.View)`
   background-color: ${theme.colors.primaryBlue.main};
   padding: 32px;
 `;
 
-export const ViewUser = styled.View`
+export const ViewUser = styled(Animated.View)`
   margin: 12px 0;
   flex-direction: row;
   align-items: center;
@@ -38,8 +39,8 @@ export const Title = styled.Text`
   font-family: ${theme.fonts.higlight.main};
 `;
 
-export const ContainerBody = styled.View<ScrollProps>`
-  flex: ${({ active }) => (active ? 3 : 6)};
+export const ContainerBody = styled.View`
+  flex: 1;
   align-items: center;
   background-color: ${theme.colors.gray.lightest};
   padding: 32px;
@@ -50,10 +51,6 @@ export const Text = styled.Text`
   color: ${theme.colors.gray.light};
   font-size: ${theme.fontSizes.medium}px;
   font-family: ${theme.fonts.body.regular};
-`;
-
-export const ContainerCards = styled.ScrollView`
-  flex: 1;
 `;
 
 export const ContainerButtons = styled.View`

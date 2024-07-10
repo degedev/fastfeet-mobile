@@ -4,72 +4,74 @@ import {
   Container,
   ContainerBody,
   ContainerButtons,
-  ContainerCards,
-  ContainerHeader,
   Text,
   Title,
   ViewLocation,
   ViewUser,
+  AnimatedHeader,
 } from "./styles";
 import { useTheme } from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { MapPin, SignOut } from "phosphor-react-native";
 import { CardDeliverie } from "../../components/CardDeliverie";
 import { TextCount } from "../../components/CardDeliverie/styles";
-import { Keyboard, TouchableOpacity } from "react-native";
-import { useEffect, useState } from "react";
+import { TouchableOpacity } from "react-native";
+import { useState } from "react";
 import { DropdownTextInput } from "../../components/Dropdown";
+import Animated, {
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
 
 export function Deliverie() {
   const { colors } = useTheme();
-  const [isScrolled, setIsScrolled] = useState(true);
   const [pendingDeliveries, setPendingDeliveries] = useState(true);
 
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
-
-  const [selectedOption, setSelectedOption] = useState("");
-
+  const scrollY = useSharedValue(0);
   const options = ["Option 1", "Option 2", "Option 3"];
-  const handleOptionSelected = (option: string) => {
-    setSelectedOption(option);
-  };
 
   const navigation = useNavigation();
 
-  const handleScroll = (event: {
-    nativeEvent: { contentOffset: { y: any } };
-  }) => {
-    const yOffset = event.nativeEvent.contentOffset.y;
-    setIsScrolled(yOffset === 0);
-  };
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    scrollY.value = event.contentOffset.y;
+  });
 
-  useEffect(() => {
-    const keyboardOpenListener = Keyboard.addListener("keyboardDidShow", () =>
-      setIsKeyboardOpen(true)
-    );
-    const keyboardCloseListener = Keyboard.addListener("keyboardDidHide", () =>
-      setIsKeyboardOpen(false)
-    );
+  const animatedHeaderStyle = useAnimatedStyle(() => {
+    const height = interpolate(scrollY.value, [0, 200], [200, 150]);
+    return {
+      height,
+      justifyContent: "flex-end",
+    };
+  });
+
+  const animatedUserStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(scrollY.value, [0, 100], [1, 0]);
+    const display = opacity === 0 ? "none" : "flex";
+    return {
+      opacity,
+      display,
+    };
   });
 
   return (
     <Container>
-      <ContainerHeader active={isScrolled} keybordActive={isKeyboardOpen}>
-        {isScrolled && (
-          <ViewUser>
-            <Text>
-              Bem vindo, {"\n"}
-              João Silva
-            </Text>
-            <TouchableOpacity>
-              <SignOut
-                size={24}
-                color={colors.primaryYellow.main}
-                weight="fill"
-              />
-            </TouchableOpacity>
-          </ViewUser>
-        )}
+      <AnimatedHeader style={animatedHeaderStyle}>
+        <ViewUser style={animatedUserStyle}>
+          <Text>
+            Bem vindo, {"\n"}
+            João Silva
+          </Text>
+          <TouchableOpacity>
+            <SignOut
+              size={24}
+              color={colors.primaryYellow.main}
+              weight="fill"
+            />
+          </TouchableOpacity>
+        </ViewUser>
+
         <ViewUser>
           <Title>Entregas</Title>
           <ViewLocation>
@@ -77,12 +79,13 @@ export function Deliverie() {
             <Text>Londrina</Text>
           </ViewLocation>
         </ViewUser>
-      </ContainerHeader>
-      <ContainerBody active={isScrolled}>
+      </AnimatedHeader>
+
+      <ContainerBody>
         <DropdownTextInput dataFilter={options} />
         <TextCount>8 entregas</TextCount>
-        <ContainerCards
-          onScroll={handleScroll}
+        <Animated.ScrollView
+          onScroll={scrollHandler}
           scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}
         >
@@ -98,11 +101,16 @@ export function Deliverie() {
           />
 
           <CardDeliverie
-            title={"Pacote 2"}
+            title={"Pacote 3"}
             date={"01/07/2024"}
             status={"retirado"}
           />
-        </ContainerCards>
+          <CardDeliverie
+            title={"Pacote 4"}
+            date={"01/07/2024"}
+            status={"retirado"}
+          />
+        </Animated.ScrollView>
       </ContainerBody>
 
       <ContainerButtons>
